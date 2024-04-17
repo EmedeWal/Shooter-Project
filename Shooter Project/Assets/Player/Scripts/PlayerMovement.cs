@@ -3,23 +3,17 @@ using UnityEngine;
 [RequireComponent (typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("VARIABLES")]
+    [SerializeField] private float _moveSpeed = 15;
+
     private CharacterController _characterController;
-    private PlayerData _playerData;
     private Vector3 _moveDirection;
     private float horizontalInput;
     private float verticalInput;
 
-    private float _moveSpeed;
-
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        _playerData = GetComponent<PlayerData>();
-    }
-
-    private void Start()
-    {
-        RetrievePlayerData();
     }
 
     private void Update()
@@ -30,23 +24,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponent<PlayerManager>().MovementInput += PlayerMovement_StoreInput;
+        GetComponent<PlayerManager>().MovementInputValue += PlayerMovement_MovementInputValue;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerManager>().MovementInput -= PlayerMovement_StoreInput;
+        GetComponent<PlayerManager>().MovementInputValue -= PlayerMovement_MovementInputValue;
     }
 
-    private void PlayerMovement_StoreInput(Vector2 movement)
+    private void PlayerMovement_MovementInputValue(Vector2 movement)
     {
         horizontalInput = movement.x;
         verticalInput = movement.y;
-    }
-
-    private void RetrievePlayerData()
-    {
-        _moveSpeed = _playerData.GetMoveSpeed();
     }
 
     private void CalculateMoveDirection()
@@ -56,6 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        _characterController.Move(_moveDirection * _moveSpeed * Time.deltaTime);
+        _characterController.Move(_moveSpeed * Time.deltaTime * _moveDirection);
     }
 }

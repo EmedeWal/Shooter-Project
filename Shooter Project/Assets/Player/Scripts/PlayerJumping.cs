@@ -3,26 +3,21 @@ using UnityEngine;
 [RequireComponent (typeof(CharacterController))]
 public class PlayerJumping : MonoBehaviour
 {
+    [Header("VARIABLES")]
+    [SerializeField] private float _jumpForce = 20;
+    [SerializeField] private float _gravity = 30;
+
+    [Header("REFERENCES")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
 
     private CharacterController _characterController;
-    private PlayerData _playerData;
     private Vector3 _velocity;
     private bool _canJump = true;
 
-    private float _jumpForce;
-    private float _gravity;
-
     private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-        _playerData = GetComponent<PlayerData>();   
-    }
-
-    private void Start()
-    {
-        RetrievePlayerData();
+        _characterController = GetComponent<CharacterController>(); 
     }
 
     private void Update()
@@ -32,23 +27,17 @@ public class PlayerJumping : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponent<PlayerManager>().JumpInput += PlayerJumping_StoreInput;
+        GetComponent<PlayerManager>().JumpInputPerformed += PlayerJumping_JumpInputPerformed;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerManager>().JumpInput -= PlayerJumping_StoreInput;
+        GetComponent<PlayerManager>().JumpInputPerformed -= PlayerJumping_JumpInputPerformed;
     }
 
-    private void PlayerJumping_StoreInput()
+    private void PlayerJumping_JumpInputPerformed()
     {
         if (_canJump) Jump();
-    }
-
-    private void RetrievePlayerData()
-    {
-        _jumpForce = _playerData.GetJumpForce();
-        _gravity = _playerData.GetGravity();
     }
 
     private void Jump()

@@ -4,13 +4,13 @@ using System.Collections;
 [RequireComponent (typeof(CharacterController))]
 public class PlayerDashing : MonoBehaviour
 {
-    private CharacterController _characterController;
-    private PlayerData _playerData;
+    [Header("VARIABLES")]
+    [SerializeField] private float _dashSpeed = 50;
+    [SerializeField] private float _dashDuration = 0.3f;
+    [SerializeField] private float _dashCooldown = 3;
+    [SerializeField] private int _dashCount = 2;
 
-    private float _dashSpeed;
-    private float _dashDuration;
-    private float _dashCooldown;
-    private int _dashCount;
+    private CharacterController _characterController;
 
     private Vector3 dashDirection;
     private bool isDashing;
@@ -18,35 +18,21 @@ public class PlayerDashing : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        _playerData = GetComponent<PlayerData>();
-    }
-
-    private void Start()
-    {
-        RetrievePlayerData();
     }
 
     private void OnEnable()
     {
-        GetComponent<PlayerManager>().DashInput += PlayerDashing_StoreInput;
+        GetComponent<PlayerManager>().DashInputPerformed += PlayerDashing_DashInputPerformed;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerManager>().DashInput -= PlayerDashing_StoreInput;
+        GetComponent<PlayerManager>().DashInputPerformed -= PlayerDashing_DashInputPerformed;
     }
 
-    private void PlayerDashing_StoreInput()
+    private void PlayerDashing_DashInputPerformed()
     {
         if (CanDash() && !isDashing) StartCoroutine(Dash());
-    }
-
-    private void RetrievePlayerData()
-    {
-        _dashSpeed = _playerData.GetDashSpeed();
-        _dashDuration = _playerData.GetDashDuration();
-        _dashCooldown = _playerData.GetDashCooldown();
-        _dashCount = _playerData.GetDashCount();    
     }
 
     // Note to self. Yield return null prevents Unity from instantly crashing. Don't know why.
