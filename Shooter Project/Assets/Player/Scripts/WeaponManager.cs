@@ -5,7 +5,7 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _weapons;
     private IWeapon _currentWeapon;
-    private int _weaponIndex = -1;
+    [SerializeField] private int _weaponIndex = -1;
 
     private void Start()
     {
@@ -39,7 +39,7 @@ public class WeaponManager : MonoBehaviour
 
     private void WeaponManager_ShootInputCanceled()
     {
-        _currentWeapon.ShootCancel();
+        _currentWeapon.CancelShoot();
     }
 
     private void WeaponManager_ShootAlternativeInputPerformed()

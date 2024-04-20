@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDirection;
     private float horizontalInput;
     private float verticalInput;
+
+    public Vector3 MoveDirection => _moveDirection;
 
     private void Awake()
     {
