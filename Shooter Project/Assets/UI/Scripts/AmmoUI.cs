@@ -7,12 +7,12 @@ public class AmmoUI : MonoBehaviour
 
     private void OnEnable()
     {
-        AmmoManager.updateAmmo += UpdateUI;
+        AmmoManager.UpdateAmmo += UpdateUI;
     }
 
     private void OnDisable()
     {
-        AmmoManager.updateAmmo -= UpdateUI;
+        AmmoManager.UpdateAmmo -= UpdateUI;
     }
 
     private void UpdateUI(int clipCount, int currentAmmo)

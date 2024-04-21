@@ -4,19 +4,43 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour 
 {
+    public enum PlayerState
+    {
+        Idle,
+        Dashing
+    }
+
+    public PlayerState State = PlayerState.Idle;
+
+    public void UpdateState(PlayerState newState)
+    {
+        State = newState;
+
+        switch (State)
+        {
+            case PlayerState.Idle:
+                break;
+
+            case PlayerState.Dashing:
+                break;
+        }
+    }
+
     public event Action<Vector2> MovementInputValue;
     public event Action<Vector2> RotationInputValue;
     public event Action JumpInputPerformed;
     public event Action DashInputPerformed;
     public event Action GrenadeInputPerformed;
-    public event Action ShootInputPerformed;
-    public event Action ShootInputCanceled;
-    public event Action ShootAlternativeInputPerformed;
+    public event Action ShootRegularInputPerformed;
+    public event Action ShootRegularInputCanceled;
+    public event Action ShootAlternateInputPerformed;
     public event Action ReloadInputPerformed;
-    public event Action SwapWeaponInputPerformed;
+    public event Action SwapGunInputPerformed;
 
     public void OnMovementInput(InputAction.CallbackContext context)
     {
+        if (State == PlayerState.Dashing) return;
+
         MovementInputValue?.Invoke(context.ReadValue<Vector2>());
     }   
 
@@ -39,15 +63,15 @@ public class PlayerManager : MonoBehaviour
         if (context.performed) GrenadeInputPerformed?.Invoke();
     }
 
-    public void OnShootInput(InputAction.CallbackContext context)
+    public void OnShootRegularInput(InputAction.CallbackContext context)
     {
-        if (context.performed) ShootInputPerformed?.Invoke();
-        if (context.canceled) ShootInputCanceled?.Invoke();
+        if (context.performed) ShootRegularInputPerformed?.Invoke();
+        if (context.canceled) ShootRegularInputCanceled?.Invoke();
     }
 
     public void OnShootAlternativeInput(InputAction.CallbackContext context)
     {
-        if (context.performed) ShootAlternativeInputPerformed?.Invoke();
+        if (context.performed) ShootAlternateInputPerformed?.Invoke();
     }
 
     public void OnReloadInput(InputAction.CallbackContext context)
@@ -55,8 +79,8 @@ public class PlayerManager : MonoBehaviour
         if (context.performed) ReloadInputPerformed?.Invoke();
     }
 
-    public void OnSwapWeaponInput(InputAction.CallbackContext context)
+    public void OnSwapGunInput(InputAction.CallbackContext context)
     {
-        if (context.performed) SwapWeaponInputPerformed?.Invoke();
+        if (context.performed) SwapGunInputPerformed?.Invoke();
     }
 }

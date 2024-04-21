@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Swap Weapon",
+                    "name": "Swap Gun",
                     "type": "Button",
                     "id": "69ac7b4b-53fc-46d2-8c68-d376603f1ac9",
                     "expectedControlType": "Button",
@@ -348,7 +348,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Swap Weapon",
+                    "action": "Swap Gun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -359,7 +359,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Swap Weapon",
+                    "action": "Swap Gun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -370,7 +370,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Swap Weapon",
+                    "action": "Swap Gun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

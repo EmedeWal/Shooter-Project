@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 15;
 
     private CharacterController _characterController;
+    private PlayerData _playerData;
     private Vector3 _moveDirection;
     private float horizontalInput;
     private float verticalInput;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _playerData = GetComponent<PlayerData>();
     }
 
     private void Update()
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void CalculateMoveDirection()
     {
         _moveDirection = transform.right * horizontalInput + transform.forward * verticalInput;
+        _playerData.SetMovementDirection(_moveDirection);
     }
 
     private void MovePlayer()

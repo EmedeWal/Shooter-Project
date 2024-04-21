@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent (typeof(CharacterController))]
 public class PlayerDashing : MonoBehaviour
@@ -11,25 +12,27 @@ public class PlayerDashing : MonoBehaviour
     [SerializeField] private int _dashCount = 2;
 
     private CharacterController _characterController;
+    private PlayerManager _playerManager;
 
-    private PlayerMovement _playerMovement;
+    private PlayerData _playerData;
     private Vector3 _dashDirection;
     private bool _isDashing;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        _playerMovement = GetComponent<PlayerMovement>();
+        _playerManager = GetComponent<PlayerManager>();
+        _playerData = GetComponent<PlayerData>();
     }
 
     private void OnEnable()
     {
-        GetComponent<PlayerManager>().DashInputPerformed += PlayerDashing_DashInputPerformed;
+        _playerManager.DashInputPerformed += PlayerDashing_DashInputPerformed;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerManager>().DashInputPerformed -= PlayerDashing_DashInputPerformed;
+        _playerManager.DashInputPerformed -= PlayerDashing_DashInputPerformed;
     }
 
     private void PlayerDashing_DashInputPerformed()
@@ -41,28 +44,25 @@ public class PlayerDashing : MonoBehaviour
     private IEnumerator Dash()
     {
         _isDashing = true;
+        _playerManager.State = PlayerManager.PlayerState.Dashing;
+
         _dashCount--;
 
         float startTime = Time.time;
 
         while (Time.time < startTime + _dashDuration)
         {
-            _dashDirection = _playerMovement.MoveDirection;
-            if (_playerMovement.MoveDirection == new Vector3(0, 0, 0)) _dashDirection = transform.forward;
+            _dashDirection = _playerData.GetMovementDirection();
+            if (_dashDirection == Vector3.zero) _dashDirection = transform.forward;
             _characterController.Move(_dashSpeed * Time.deltaTime * _dashDirection);
             yield return null;
         }
 
         _isDashing = false;
+        _playerManager.State = PlayerManager.PlayerState.Idle;
 
-        //Invoke(nameof(EndDash), _dashDuration);
         Invoke(nameof(ResetDash), _dashCooldown);
     }
-
-    //private void EndDash()
-    //{
-    //    _isDashing = false;
-    //}
 
     private void ResetDash()
     {

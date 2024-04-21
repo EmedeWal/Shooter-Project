@@ -12,12 +12,14 @@ public class PlayerJumping : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
 
     private CharacterController _characterController;
+    private PlayerManager _playerManager;
     private Vector3 _velocity;
     private bool _canJump = true;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>(); 
+        _playerManager = GetComponent<PlayerManager>();
     }
 
     private void Update()
@@ -61,8 +63,10 @@ public class PlayerJumping : MonoBehaviour
     private void ManageVerticalPosition()
     {
         if (IsGrounded() && _velocity.y < 0) _velocity.y = -0.2f;
-
         _velocity.y -= _gravity * Time.deltaTime;
+
+        if (_playerManager.State == PlayerManager.PlayerState.Dashing) return;
+
         _characterController.Move(_velocity * Time.deltaTime);
     }
 }
