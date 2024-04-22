@@ -38,15 +38,11 @@ public class PlayerSwapGun : MonoBehaviour
 
         if (_index >= guns.Length) _index = 0;
 
-        foreach (var weapon in guns)
-        {
-            weapon.SetActive(false);
-        }
+        foreach (var weapon in guns) weapon.SetActive(false);
 
         GameObject currentWeapon = guns[_index];
         currentWeapon.SetActive(true);
-        _playerData.SetCurrentGun(currentWeapon);
 
-        currentWeapon.GetComponent<GunManager>().Activate();
+        currentWeapon.GetComponent<AmmoManager>().OnAmmoUpdate();
     }
 }

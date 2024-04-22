@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2885910460428373137}
   m_Layer: 9
-  m_Name: Muzzle
+  m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,10 +40,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 644589237665008980}
-  - component: {fileID: 6407620909736248133}
+  - component: {fileID: 2040595126786455799}
+  - component: {fileID: 9219349795205530915}
   - component: {fileID: 195177704676835001}
-  - component: {fileID: 6426992309829360841}
-  - component: {fileID: 550902241749658290}
+  - component: {fileID: 1539358202081290685}
+  - component: {fileID: 1780372651676476906}
   - component: {fileID: 60997146935136188}
   m_Layer: 9
   m_Name: Plasma Shotgun
@@ -68,7 +69,7 @@ Transform:
   - {fileID: 4622784544912397613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -5, y: -5, z: 0}
---- !u!114 &6407620909736248133
+--- !u!114 &2040595126786455799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,10 +78,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1265975321288445418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f19f0d29e27dcfc438a8cd0c1d645719, type: 3}
+  m_Script: {fileID: 11500000, guid: 61a51adaac9f7e340bd73236a2604b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+--- !u!114 &9219349795205530915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265975321288445418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d845d82a7b3eb3478ec47813a0452a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwapToRegularMode:
+    m_PersistentCalls:
+      m_Calls: []
+  SwapToAlternateMode:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &195177704676835001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,10 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clipCapacity: 10
-  _reloadTime: 0
-  _emptyClip: {fileID: 0}
-  _reloadClip: {fileID: 0}
---- !u!114 &6426992309829360841
+  _reloadTime: 1.5
+  _emptyClip: {fileID: 8300000, guid: 16458abe8d5a64f7a8082f0de46d643f, type: 3}
+  _reloadClip: {fileID: 8300000, guid: 0ae4a20a1902842349712242a032c8ab, type: 3}
+--- !u!114 &1539358202081290685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,7 +128,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7bffd912943e24b8fd2aa2429edeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &550902241749658290
+  _firePoint: {fileID: 2885910460428373137}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  _bulletHoleGraphics: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  _fireClip: {fileID: 8300000, guid: a4ef8ffb6472a4f39a9a6462b071a991, type: 3}
+  _damage: 15
+  _spread: 0.1
+  _range: 30
+  _fireDuration: 0.5
+  _fireCD: 0.5
+  _ammoConsumption: 1
+  _pellets: 8
+--- !u!114 &1780372651676476906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +151,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b83dae7aaf9da34e9638be5db8ba4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firePoint: {fileID: 2885910460428373137}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  _bulletHoleGraphics: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  _fireClip: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
+  _damage: 10
+  _spread: 0.025
+  _range: 50
+  _fireDuration: 0.5
+  _fireCD: 0.5
+  _ammoConsumption: 1
+  _pellets: 8
 --- !u!82 &60997146935136188
 AudioSource:
   m_ObjectHideFlags: 0

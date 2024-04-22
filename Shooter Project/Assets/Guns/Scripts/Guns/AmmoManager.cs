@@ -22,26 +22,26 @@ public class AmmoManager : MonoBehaviour
     public delegate void Delegate_UpdateAmmo(int clipCount, int currentAmmo);
     public static event Delegate_UpdateAmmo UpdateAmmo;
 
-    private GunManager _gunManager;
+    private GunStateManager _gunStateManager;
 
     public event Action ReloadStart;
 
     private void Awake()
     {
+        _gunStateManager = GetComponent<GunStateManager>();
         _audioSource = GetComponent<AudioSource>();
-        _gunManager = GetComponent<GunManager>();
         
         SetInitialVariables();
     }
 
     private void OnEnable()
     {
-        _gunManager.ReloadPerformed += AmmoManager_ReloadPerformed;
+        PlayerReload.ReloadPerformed += AmmoManager_ReloadPerformed;
     }
 
     private void OnDisable()
     {
-        _gunManager.ReloadPerformed -= AmmoManager_ReloadPerformed;
+        PlayerReload.ReloadPerformed -= AmmoManager_ReloadPerformed;
     }
 
     private void AmmoManager_ReloadPerformed()
@@ -82,18 +82,18 @@ public class AmmoManager : MonoBehaviour
 
     private void OnReloadStart()
     {
-        _gunManager.State = GunManager.GunState.Reloading;
+        _gunStateManager.State = GunStateManager.GunState.Reloading;
         ReloadStart?.Invoke();
     }
 
     private void OnReloadComplete()
     {
-        _gunManager.State = GunManager.GunState.Idle;
+        _gunStateManager.State = GunStateManager.GunState.Idle;
     }
 
     public bool CanReload()
     {
-        if (_currentAmmo <= 0 || _clipCount == _clipCapacity) return false;
+        if (_currentAmmo <= 0 || _clipCount == _clipCapacity || _gunStateManager.State == GunStateManager.GunState.Firing) return false;
         return true;
     }
 
@@ -112,7 +112,6 @@ public class AmmoManager : MonoBehaviour
         _clipCount -= amount;
         OnAmmoUpdate();
     }
-
 
     public void OnAmmoUpdate()
     {

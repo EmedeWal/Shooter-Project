@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3391460800788322957}
-  - component: {fileID: 1894336790177436996}
+  - component: {fileID: 7373710486048848961}
+  - component: {fileID: 8847082180508157249}
   - component: {fileID: 1168384081879334495}
-  - component: {fileID: 2695555928694218978}
-  - component: {fileID: 5171182083543210063}
+  - component: {fileID: 9192355525754475732}
+  - component: {fileID: 6624976650904641500}
   - component: {fileID: 4055614665158406186}
   m_Layer: 9
   m_Name: Assault Rifle
@@ -37,7 +38,7 @@ Transform:
   - {fileID: 5918772862478370892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1894336790177436996
+--- !u!114 &7373710486048848961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,10 +47,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 6146635194039877567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f19f0d29e27dcfc438a8cd0c1d645719, type: 3}
+  m_Script: {fileID: 11500000, guid: 61a51adaac9f7e340bd73236a2604b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+--- !u!114 &8847082180508157249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146635194039877567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d845d82a7b3eb3478ec47813a0452a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwapToRegularMode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9192355525754475732}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6624976650904641500}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  SwapToAlternateMode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9192355525754475732}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6624976650904641500}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1168384081879334495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +133,7 @@ MonoBehaviour:
   _reloadTime: 1
   _emptyClip: {fileID: 8300000, guid: 8af5749b172a645a68265fc8c9ed216d, type: 3}
   _reloadClip: {fileID: 8300000, guid: 552e1ee9826bb42fe83505a9defb673d, type: 3}
---- !u!114 &2695555928694218978
+--- !u!114 &9192355525754475732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,35 +145,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0c7da1631007e45b1d5d18db88edb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzleFlash: {fileID: 8563292023271346693, guid: e5587fb23acedbe44a692836cc927615, type: 3}
-  _muzzle: {fileID: 1466896073500758273}
-  _animator: {fileID: 6170306978788753550}
-  _damage: 10
-  _fireRate: 0.1
-  _fireRange: 40
+  _firePoint: {fileID: 1466896073500758273}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  _bulletHoleGraphics: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
   _fireClip: {fileID: 8300000, guid: e5f0a762c652f4065a1238d2febd38c6, type: 3}
---- !u!114 &5171182083543210063
+  _damage: 10
+  _spread: 0.05
+  _range: 50
+  _fireDuration: 0.1
+  _fireCD: 0.1
+  _ammoConsumption: 1
+  _fireRate: 10
+--- !u!114 &6624976650904641500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6146635194039877567}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ab2cb5190acef846b5db369941f30de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzleFlash: {fileID: 8563292023271346693, guid: e5587fb23acedbe44a692836cc927615, type: 3}
-  _muzzle: {fileID: 1387729308142557828}
-  animator: {fileID: 6170306978788753550}
-  _bursts: 5
-  _damage: 10
-  _fireRange: 40
-  _burstPause: 0.05
-  _rechargeDelay: 0.15
-  _burstCD: 0.5
+  _firePoint: {fileID: 1387729308142557828}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  _bulletHoleGraphics: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
   _fireClip: {fileID: 8300000, guid: e5f0a762c652f4065a1238d2febd38c6, type: 3}
+  _damage: 10
+  _spread: 0.025
+  _range: 60
+  _fireDuration: 0.25
+  _fireCD: 0.25
+  _ammoConsumption: 1
+  _burstCount: 5
+  _burstPause: 0.1
 --- !u!82 &4055614665158406186
 AudioSource:
   m_ObjectHideFlags: 0

@@ -2,26 +2,33 @@ using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
 {
-    private PlayerData _playerData;
+    private PlayerManager _playerManager;
+
+    public delegate void Delegate_ReloadPerformed();
+    public static event Delegate_ReloadPerformed ReloadPerformed;
 
     private void Awake()
     {
-        _playerData = GetComponent<PlayerData>();
+        _playerManager = GetComponent<PlayerManager>();
     }
 
     private void OnEnable()
     {
-        GetComponent<PlayerManager>().ReloadInputPerformed += PlayerReload_ReloadInputPerformed;
+        _playerManager.ReloadInputPerformed += PlayerReload_ReloadInputPerformed;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerManager>().ReloadInputPerformed -= PlayerReload_ReloadInputPerformed;
+        _playerManager.ReloadInputPerformed -= PlayerReload_ReloadInputPerformed;
     }
 
     private void PlayerReload_ReloadInputPerformed()
     {
-        GameObject currentGun = _playerData.GetCurrentGun();
-        currentGun.GetComponent<GunManager>().OnReloadPerformed();
+        OnReloadPerformed();
+    }
+
+    private void OnReloadPerformed()
+    {
+        ReloadPerformed?.Invoke();
     }
 }

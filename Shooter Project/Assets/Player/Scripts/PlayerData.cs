@@ -30,17 +30,6 @@ public class PlayerData : MonoBehaviour
         return _gunData.Guns;
     }
 
-
-    public GameObject GetCurrentGun()
-    {
-        return _gunData.CurrentGun;
-    }
-
-    public void SetCurrentGun(GameObject currentWeapon)
-    {
-        _gunData.CurrentGun = currentWeapon;
-    }
-
     #endregion
 }
 
@@ -54,8 +43,6 @@ public struct MovementData
 public struct GunData
 {
     public GameObject[] Guns;
-
-    [HideInInspector] public GameObject CurrentGun;
 }
 
 //[Serializable]

@@ -31,11 +31,12 @@ public class PlayerManager : MonoBehaviour
     public event Action JumpInputPerformed;
     public event Action DashInputPerformed;
     public event Action GrenadeInputPerformed;
-    public event Action ShootRegularInputPerformed;
-    public event Action ShootRegularInputCanceled;
-    public event Action ShootAlternateInputPerformed;
+    public event Action ShootInputPerformed;
+    public event Action ShootInputCanceled;
     public event Action ReloadInputPerformed;
     public event Action SwapGunInputPerformed;
+    public event Action SwapModeInputPerformed;
+    public event Action SwapModeInputCanceled;
 
     public void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -63,15 +64,10 @@ public class PlayerManager : MonoBehaviour
         if (context.performed) GrenadeInputPerformed?.Invoke();
     }
 
-    public void OnShootRegularInput(InputAction.CallbackContext context)
+    public void OnShootInput(InputAction.CallbackContext context)
     {
-        if (context.performed) ShootRegularInputPerformed?.Invoke();
-        if (context.canceled) ShootRegularInputCanceled?.Invoke();
-    }
-
-    public void OnShootAlternativeInput(InputAction.CallbackContext context)
-    {
-        if (context.performed) ShootAlternateInputPerformed?.Invoke();
+        if (context.performed) ShootInputPerformed?.Invoke();
+        if (context.canceled) ShootInputCanceled?.Invoke();
     }
 
     public void OnReloadInput(InputAction.CallbackContext context)
@@ -82,5 +78,11 @@ public class PlayerManager : MonoBehaviour
     public void OnSwapGunInput(InputAction.CallbackContext context)
     {
         if (context.performed) SwapGunInputPerformed?.Invoke();
+    }
+
+    public void OnSwapModeInput(InputAction.CallbackContext context)
+    {
+        if (context.performed) SwapModeInputPerformed?.Invoke();
+        if (context.canceled) SwapModeInputCanceled?.Invoke();
     }
 }

@@ -85,9 +85,9 @@ public class PPFXScale : MonoBehaviour {
     //		_so.FindProperty("ForceModule.x.scalar").floatValue *= _scaleFactor;
     //		_so.FindProperty("ForceModule.y.scalar").floatValue *= _scaleFactor;
     //		_so.FindProperty("ForceModule.z.scalar").floatValue *= _scaleFactor;
-    //		_so.FindProperty("ColorBySpeedModule.range").vector2Value *= _scaleFactor;
-    //		_so.FindProperty("SizeBySpeedModule.range").vector2Value *= _scaleFactor;
-    //		_so.FindProperty("RotationBySpeedModule.range").vector2Value *= _scaleFactor;
+    //		_so.FindProperty("ColorBySpeedModule._range").vector2Value *= _scaleFactor;
+    //		_so.FindProperty("SizeBySpeedModule._range").vector2Value *= _scaleFactor;
+    //		_so.FindProperty("RotationBySpeedModule._range").vector2Value *= _scaleFactor;
     //		_so.ApplyModifiedProperties();
     //	} 
     //	#endif 

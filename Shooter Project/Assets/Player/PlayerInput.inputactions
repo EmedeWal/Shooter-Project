@@ -60,15 +60,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shoot (Alternative)",
-                    "type": "Button",
-                    "id": "4918766a-4a2b-462c-9208-00aa41bfb01c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Reload",
                     "type": "Button",
                     "id": "892c5fd6-dc68-4e51-b49a-1cdbb6d55f36",
@@ -81,6 +72,15 @@
                     "name": "Swap Gun",
                     "type": "Button",
                     "id": "69ac7b4b-53fc-46d2-8c68-d376603f1ac9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Swap Mode",
+                    "type": "Button",
+                    "id": "b72682e5-5932-4a33-9849-8d040985b06c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -277,39 +277,6 @@
                 },
                 {
                     "name": "",
-                    "id": "02b3e25c-1b05-45c7-8327-4b762c377bd5",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shoot (Alternative)",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7798c34b-22a3-4c84-9c05-8f2ae9174981",
-                    "path": "<DualShockGamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shoot (Alternative)",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3a10c107-a090-461e-8ef0-d4e622426277",
-                    "path": "<XInputController>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shoot (Alternative)",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "19593343-1919-47ed-85ec-4a4c8b9e7b83",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -343,39 +310,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a6c35a24-73b4-4e66-a255-dd41de2f4d8f",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Swap Gun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3db43ca8-5d48-43cb-ae2b-45e333d5d391",
-                    "path": "<DualShockGamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Swap Gun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "93d64c64-2979-488a-a006-d7eaf8bf8e8c",
-                    "path": "<XInputController>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Swap Gun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d41a62d5-5bfb-415e-91c5-2ac16151f8be",
                     "path": "<Keyboard>/v",
                     "interactions": "",
@@ -404,6 +338,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Grenade",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5216894e-cfc4-437d-bcf0-c579dee4736b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "088fd606-e570-41ac-bbe5-394cf82ca9c7",
+                    "path": "<DualShockGamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "560c1f84-e9fa-4e38-a609-9e429d68f9ee",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6c35a24-73b4-4e66-a255-dd41de2f4d8f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Gun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3db43ca8-5d48-43cb-ae2b-45e333d5d391",
+                    "path": "<DualShockGamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Gun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93d64c64-2979-488a-a006-d7eaf8bf8e8c",
+                    "path": "<XInputController>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swap Gun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,34 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShotgunAlternate : MonoBehaviour
 {
     [Header("REFERENCES")]
-    [SerializeField] private GameObject _muzzleFlash;
-    [SerializeField] private Transform _muzzle;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _firePoint;
+    private GunStateManager _gunStateManager;
     private AmmoManager _ammoManager;
-    private GunManager _gunManager;
-    private Transform _firePoint;
-    private int _layerMask;
+    private Camera _camera;
+    private LayerMask _layerMask;
 
-    [Header("VARIABLES")]
-    [SerializeField] private int _damage = 100;
-    [SerializeField] private float _fireRange = 60f;
-    [SerializeField] private float _fireRate = 0.5f;
-    [SerializeField] private float _fireDuration = 0.3f;
+    [Header("GRAPHICS")]
+    [SerializeField] private GameObject muzzleFlash, _bulletHoleGraphics;
 
     [Header("AUDIO")]
     [SerializeField] private AudioClip _fireClip;
     private AudioSource _audioSource;
 
+    //public CamShake camShake;
+    //public float camShakeMagnitude, camShakeDuration;
+
+    [Header("STATS")]
+    [SerializeField] private int _damage;
+    [SerializeField] private float _spread, _range, _fireDuration, _fireCD;
+    [SerializeField] private int _ammoConsumption = 1;
+    [SerializeField] private int _pellets;
+
     private void Awake()
     {
+        _gunStateManager = GetComponent<GunStateManager>();
         _ammoManager = GetComponent<AmmoManager>();
-        _gunManager = GetComponent<GunManager>();
         _audioSource = GetComponent<AudioSource>();
-        _firePoint = GetComponentInParent<Transform>();
+        _camera = GetComponentInParent<Camera>();
     }
 
     private void Start()
@@ -38,66 +40,91 @@ public class ShotgunAlternate : MonoBehaviour
 
     private void OnEnable()
     {
-        _gunManager.ShootAlternatePerformed += ShotgunAlternate_ShootAlternatePerformed;
+        PlayerShoot.ShootPerformed += ShotgunAlternate_ShootPerformed;
     }
 
     private void OnDisable()
     {
-        _gunManager.ShootAlternatePerformed -= ShotgunAlternate_ShootAlternatePerformed;
+        PlayerShoot.ShootPerformed -= ShotgunAlternate_ShootPerformed;
+
+        ResetState();
     }
 
-    private void ShotgunAlternate_ShootAlternatePerformed()
+    private void ShotgunAlternate_ShootPerformed()
+    {
+        if (CanShoot()) ShootPellets();
+    }
+
+    private void ShootPellets()
+    {
+        for (int i = 0; i < _pellets; i++) Shoot();
+
+        Invoke(nameof(ResetToRecharging), _fireDuration);
+    }
+
+    private void Shoot()
     {
         if (_ammoManager.ClipEmpty()) return;
 
-        _gunManager.UpdateState(GunManager.GunState.Firing);
-        Fire(_damage, _fireRange, _fireClip);
-    }
+        _gunStateManager.UpdateState(GunStateManager.GunState.Firing);
 
-    private void Fire(int damage, float fireRange, AudioClip fireClip)
-    {
-        FireSetup(fireClip);
+        Vector3 direction = CalculateSpread();
+        Vector3 position = _camera.transform.position;
 
-        if (Physics.Raycast(_firePoint.position, _firePoint.forward, out RaycastHit hit, fireRange, _layerMask))
+        if (Physics.Raycast(position, direction, out RaycastHit hitInfo, _range, _layerMask))
         {
-            if (hit.transform.TryGetComponent(out Health health))
-            {
-                health.Damage(damage);
-            }
+            if (hitInfo.transform.TryGetComponent<Health>(out var health)) health.Damage(_damage);
+
+            Instantiate(_bulletHoleGraphics, hitInfo.point, Quaternion.Euler(0, 180, 0));
         }
 
-        Invoke(nameof(ResetToRecharging), _fireDuration);
-        Invoke(nameof(ResetToIdle), _fireRate);
+        Instantiate(muzzleFlash, _firePoint);
+        PlayAudioClip(_fireClip);
+        _ammoManager.SpendAmmo(_ammoConsumption);
+
+        //ShakeCamera
+        //camShake.Shake(camShakeDuration, camShakeMagnitude);
     }
 
-    private void FireSetup(AudioClip fireClip)
+    private bool CanShoot()
     {
-        _ammoManager.SpendAmmo(1);
-        _animator.SetTrigger("Fire");
+        if (_gunStateManager.State != GunStateManager.GunState.Idle) return false;
+        return true;
+    }
 
-        MuzzleFlash(_muzzle);
-        SwitchAudioClip(fireClip);
-
+    private Vector3 CalculateSpread()
+    {
+        float x = Random.Range(-_spread, _spread);
+        float y = Random.Range(-_spread, _spread);
+        return _camera.transform.forward + new Vector3(x, y, 0);
     }
 
     private void ResetToRecharging()
     {
-        _gunManager.UpdateState(GunManager.GunState.Recharging);
+        UpdateState(GunStateManager.GunState.Recharging);
+        Invoke(nameof(ResetToIdle), _fireCD);
     }
 
     private void ResetToIdle()
     {
-        _gunManager.UpdateState(GunManager.GunState.Idle);
+        UpdateState(GunStateManager.GunState.Idle);
     }
 
-    private void SwitchAudioClip(AudioClip clip)
+    private void ResetState()
     {
-        _audioSource.clip = clip;
+        UpdateState(GunStateManager.GunState.Idle);
+        CancelInvoke();
+    }
+
+    private void UpdateState(GunStateManager.GunState state)
+    {
+        _gunStateManager.UpdateState(state);
+    }
+
+    private void PlayAudioClip(AudioClip audioClip)
+    {
+        _audioSource.Stop();
+        _audioSource.clip = audioClip;
         _audioSource.Play();
-    }
-
-    private void MuzzleFlash(Transform origin)
-    {
-        Instantiate(_muzzleFlash, origin);
     }
 }
