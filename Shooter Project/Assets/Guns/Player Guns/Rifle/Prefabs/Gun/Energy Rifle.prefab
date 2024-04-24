@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 212434513676971499}
   - component: {fileID: 1055154151916624827}
   - component: {fileID: 4668056341296504138}
+  - component: {fileID: 4811185642069987703}
   - component: {fileID: 2640603697596252845}
   m_Layer: 9
   m_Name: Energy Rifle
@@ -125,6 +126,34 @@ MonoBehaviour:
   _chargeRate: 0.1
   _chargeDamageBonus: 10
   _chargeRangeBonus: 10
+--- !u!114 &4811185642069987703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233271817997086198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74dbabdd456a6b408c8052843dfc20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _firePoint: {fileID: 280790153395109031}
+  projectileGFX: {fileID: 3662228890420597772, guid: d3433349ce89614428dde8cb93990f2b, type: 3}
+  _bulletHoleGraphics: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  _chargingClip: {fileID: 8300000, guid: 6a32a0d49cd240b4cb9934adf37a49a5, type: 3}
+  _fireClip: {fileID: 8300000, guid: b47937426fd334cbb9bcd463e67e5744, type: 3}
+  _damage: 1
+  _spread: 0
+  _range: 50
+  _fireDuration: 1
+  _fireCD: 1
+  _ammoConsumption: 1
+  _damageRate: 0.1
+  _ammoConsumptionRate: 1
+  _chargeCapacity: 4
+  _chargeRate: 0.5
+  _chargeDamageBonus: 1
 --- !u!82 &2640603697596252845
 AudioSource:
   m_ObjectHideFlags: 0

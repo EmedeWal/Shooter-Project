@@ -129,7 +129,7 @@ public class GunSystem : MonoBehaviour
 
     private bool CanShoot()
     {
-        if (_ammoManager.ClipEmpty() || _gunStateManager.State != GunStateManager.GunState.Idle) return false;
+        if (_ammoManager.ClipEmpty(_ammoConsumption) || _gunStateManager.State != GunStateManager.GunState.Idle) return false;
         return true;
     }
 

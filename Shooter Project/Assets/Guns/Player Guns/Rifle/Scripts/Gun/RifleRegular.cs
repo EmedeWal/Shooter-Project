@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Drawing;
 using UnityEngine;
 
 public class RifleRegular : MonoBehaviour
@@ -24,20 +23,28 @@ public class RifleRegular : MonoBehaviour
     //public float camShakeMagnitude, camShakeDuration;
 
     [Header("STATS")]
-    [SerializeField] private int _damage;
-    [SerializeField] private float _spread, _range, _fireDuration, _fireCD;
-    [SerializeField] private int _ammoConsumption = 1;
+    [SerializeField] private int _damage, _range;
+    [SerializeField] private float _spread, _fireDuration, _fireCD;
+    [SerializeField] private int _ammoConsumption = 10;
 
     [Header("CHARGING")]
-    [SerializeField] private int _chargeCapacity = 10;
-    [SerializeField] private float _chargeRate = 0.1f;
-    [SerializeField] private int _chargeDamageBonus = 10;
-    [SerializeField] private int _chargeRangeBonus = 10;
+    [SerializeField] private float _chargeDuration = 1;
+    [SerializeField] private int _maxChargeLevel = 5;
+    [SerializeField] private int _maxChargeLevelDamageBonus = 50;
+    [SerializeField] private int _maxChargeLevelRangeBonus = 50;
+    [SerializeField] private int _maxChargeLevelAdditionalAmmoConsumption = 10;
+
+    private float _chargeRate;
+    private int _bonusDamagePerChargeLevel;
+    private int _bonusRangePerChargeLevel;
+    private int _additionalAmmoConsumptionPerChargeLevel;
+    private float _originalSpread;
+
     private int _bonusDamage;
     private int _bonusRange;
+    private int _bonusAmmo;
     private float _spreadModifier;
 
-    private float _originalSpread;
 
     private void Awake()
     {
@@ -51,8 +58,13 @@ public class RifleRegular : MonoBehaviour
     {
         _layerMask = ~LayerMask.GetMask("Player");
 
+        _chargeRate = _chargeDuration / _maxChargeLevel;
+        _bonusDamagePerChargeLevel = _maxChargeLevelDamageBonus / _maxChargeLevel;
+        _bonusRangePerChargeLevel = _maxChargeLevelRangeBonus / _maxChargeLevel;
+        _additionalAmmoConsumptionPerChargeLevel = _maxChargeLevelAdditionalAmmoConsumption / _maxChargeLevel;
+
         _originalSpread = _spread;
-        _spreadModifier = _spread / _chargeCapacity;
+        _spreadModifier = _spread / _maxChargeLevel;
     }
 
     private void OnEnable()
@@ -88,9 +100,9 @@ public class RifleRegular : MonoBehaviour
     {
         if (_gunStateManager.State != GunStateManager.GunState.Charging) return;
 
-        ReleaseShot();
         StopAllCoroutines();
         Invoke(nameof(ResetToRecharging), _fireDuration);
+        ReleaseShot(_damage + _bonusDamage, _range + _bonusRange, _ammoConsumption + _bonusAmmo);
     }
 
     private IEnumerator ChargeShot()
@@ -101,40 +113,45 @@ public class RifleRegular : MonoBehaviour
 
         _bonusDamage = 0;
         _bonusRange = 0;
+        _bonusAmmo = 0;
         _spread = _originalSpread;
+
         int chargeLevel = 0;
 
         while (true)
         {
             yield return new WaitForSeconds(_chargeRate);
-            _bonusDamage += _chargeDamageBonus;
-            _bonusRange += _chargeRangeBonus;
+
+            _bonusDamage += _bonusDamagePerChargeLevel;
+            _bonusRange += _bonusRangePerChargeLevel;
+            _bonusAmmo += _additionalAmmoConsumptionPerChargeLevel;
             _spread -= _spreadModifier;
+
             chargeLevel++;
 
-            if (chargeLevel == _chargeCapacity) break;
+            if (chargeLevel == _maxChargeLevel || _ammoManager.ClipEmpty(_ammoConsumption + _bonusAmmo)) break;
         }
 
         StopShooting();
     }
 
-    private void ReleaseShot()
+    private void ReleaseShot(int damage, int range, int ammoConsumption)
     {
         _gunStateManager.UpdateState(GunStateManager.GunState.Firing);
 
         Vector3 direction = CalculateSpread();
         Vector3 position = _camera.transform.position;
 
-        if (Physics.Raycast(position, direction, out RaycastHit hitInfo, _range, _layerMask))
+        if (Physics.Raycast(position, direction, out RaycastHit hitInfo, range, _layerMask))
         {
-            if (hitInfo.transform.TryGetComponent<Health>(out var health)) health.Damage(_damage);
+            if (hitInfo.transform.TryGetComponent<Health>(out var health)) health.Damage(damage);
 
             Instantiate(_bulletHoleGraphics, hitInfo.point, Quaternion.Euler(0, 180, 0));
         }
 
-        Instantiate(projectileGFX, _firePoint);
+        Instantiate(projectileGFX, _firePoint.position, _firePoint.rotation);
         PlayAudioClip(_fireClip);
-        _ammoManager.SpendAmmo(_ammoConsumption);
+        _ammoManager.SpendAmmo(ammoConsumption);
 
         //ShakeCamera
         //camShake.Shake(camShakeDuration, camShakeMagnitude);
@@ -142,7 +159,7 @@ public class RifleRegular : MonoBehaviour
 
     private bool CanShoot()
     {
-        if (_ammoManager.ClipEmpty() || _gunStateManager.State != GunStateManager.GunState.Idle) return false;
+        if (_ammoManager.ClipEmpty(_ammoConsumption) || _gunStateManager.State != GunStateManager.GunState.Idle) return false;
         return true;
     }
 

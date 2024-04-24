@@ -1,7 +1,6 @@
-using System.Drawing;
 using UnityEngine;
 
-public class AssaultRifleRegular : MonoBehaviour
+public class AssaultRifleRegular : Gun
 {
     [Header("REFERENCES")]
     [SerializeField] private Transform _firePoint;
@@ -39,6 +38,10 @@ public class AssaultRifleRegular : MonoBehaviour
     private void Start()
     {
         _layerMask = ~LayerMask.GetMask("Player");
+
+        SetVariables(_gunStateManager);
+
+        Debug.Log(CanShoot());
     }
 
     private void OnEnable()
@@ -79,7 +82,7 @@ public class AssaultRifleRegular : MonoBehaviour
 
     private void Shoot()
     {
-        if (_ammoManager.ClipEmpty()) return;
+        if (_ammoManager.ClipEmpty(_ammoConsumption)) return;
 
         _gunStateManager.UpdateState(GunStateManager.GunState.Firing);
 
@@ -130,6 +133,7 @@ public class AssaultRifleRegular : MonoBehaviour
         UpdateState(GunStateManager.GunState.Idle);
         CancelInvoke();
     }
+
     private void UpdateState(GunStateManager.GunState state)
     {
         _gunStateManager.UpdateState(state);

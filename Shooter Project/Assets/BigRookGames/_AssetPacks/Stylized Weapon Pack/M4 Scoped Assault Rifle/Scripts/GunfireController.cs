@@ -78,7 +78,7 @@ namespace BigRookGames.Weapons
             // --- Spawn muzzle flash ---
             var flash = Instantiate(muzzlePrefab, muzzlePosition.transform);
 
-            // --- ReleaseShot Projectile Object ---
+            // --- ReleaseBeam Projectile Object ---
             if (projectilePrefab != null)
             {
                 GameObject newProjectile = Instantiate(projectilePrefab, muzzlePosition.transform.position, muzzlePosition.transform.rotation, transform);

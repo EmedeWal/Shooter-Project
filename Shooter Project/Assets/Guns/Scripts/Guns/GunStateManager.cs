@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class GunStateManager : MonoBehaviour
 {
+    public delegate void Delegate_GunStateUpdate(GunState newState);
+    public static event Delegate_GunStateUpdate GunStateUpdate;
+
     public enum GunState
     {
         Idle,
@@ -17,6 +20,16 @@ public class GunStateManager : MonoBehaviour
     {
         if (State == GunState.Reloading) return;
 
+        ChangeState(state);
+    }
+
+    public void OverrideState(GunState state)
+    {
+        ChangeState(state);
+    }
+
+    private void ChangeState(GunState state)
+    {
         State = state;
 
         //Debug.Log($"State was updated to: {State}");
@@ -38,5 +51,18 @@ public class GunStateManager : MonoBehaviour
             case GunState.Reloading:
                 break;
         }
+
+        OnGunStateUpdate();
+    }
+
+    private void OnGunStateUpdate()
+    {
+        GunStateUpdate?.Invoke(State);
+    }
+
+    public bool IsIdle()
+    {
+        if (State == GunState.Idle) return true;
+        return false;
     }
 }

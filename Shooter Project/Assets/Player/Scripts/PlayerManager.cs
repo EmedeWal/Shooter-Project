@@ -40,8 +40,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnMovementInput(InputAction.CallbackContext context)
     {
-        if (State == PlayerState.Dashing) return;
-
+        //if (State == PlayerState.Dashing) return;
         MovementInputValue?.Invoke(context.ReadValue<Vector2>());
     }   
 
@@ -52,6 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
+        //if (State == PlayerState.Dashing) return;
         if (context.performed) JumpInputPerformed?.Invoke();
     }
 

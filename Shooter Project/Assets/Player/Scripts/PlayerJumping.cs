@@ -1,3 +1,4 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
@@ -62,10 +63,10 @@ public class PlayerJumping : MonoBehaviour
 
     private void ManageVerticalPosition()
     {
+        if (_playerManager.State == PlayerManager.PlayerState.Dashing) return;
+
         if (IsGrounded() && _velocity.y < 0) _velocity.y = -0.2f;
         _velocity.y -= _gravity * Time.deltaTime;
-
-        if (_playerManager.State == PlayerManager.PlayerState.Dashing) return;
 
         _characterController.Move(_velocity * Time.deltaTime);
     }

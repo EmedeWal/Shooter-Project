@@ -70,7 +70,7 @@ public class AssaultRifleAlternate : MonoBehaviour
 
     private void Shoot()
     {
-        if (_ammoManager.ClipEmpty()) return;
+        if (_ammoManager.ClipEmpty(_ammoConsumption)) return;
 
         _gunStateManager.UpdateState(GunStateManager.GunState.Firing);
 

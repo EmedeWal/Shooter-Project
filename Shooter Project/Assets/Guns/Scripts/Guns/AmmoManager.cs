@@ -82,13 +82,13 @@ public class AmmoManager : MonoBehaviour
 
     private void OnReloadStart()
     {
-        _gunStateManager.State = GunStateManager.GunState.Reloading;
+        _gunStateManager.UpdateState(GunStateManager.GunState.Reloading);
         ReloadStart?.Invoke();
     }
 
     private void OnReloadComplete()
     {
-        _gunStateManager.State = GunStateManager.GunState.Idle;
+        _gunStateManager.OverrideState(GunStateManager.GunState.Idle);
     }
 
     public bool CanReload()
@@ -97,9 +97,9 @@ public class AmmoManager : MonoBehaviour
         return true;
     }
 
-    public bool ClipEmpty()
+    public bool ClipEmpty(int ammoConsumption)
     {
-        if (_clipCount <= 0)
+        if (_clipCount < ammoConsumption)
         {
             if (!_audioSource.isPlaying) SwitchAudioClip(_emptyClip);
             return true;
@@ -110,6 +110,7 @@ public class AmmoManager : MonoBehaviour
     public void SpendAmmo(int amount)
     {
         _clipCount -= amount;
+        if (_clipCount < 0) _clipCount = 0;
         OnAmmoUpdate();
     }
 
