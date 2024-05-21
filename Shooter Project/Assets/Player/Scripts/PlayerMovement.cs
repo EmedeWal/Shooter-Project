@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -9,11 +8,11 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController _characterController;
     private PlayerData _playerData;
-    private Vector3 _moveDirection;
+    private Vector3 _movementDirection;
     private float horizontalInput;
     private float verticalInput;
 
-    public Vector3 MoveDirection => _moveDirection;
+    public Vector3 MoveDirection => _movementDirection;
 
     private void Awake()
     {
@@ -45,12 +44,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void CalculateMoveDirection()
     {
-        _moveDirection = transform.right * horizontalInput + transform.forward * verticalInput;
-        _playerData.SetMovementDirection(_moveDirection);
+        _movementDirection = transform.right * horizontalInput + transform.forward * verticalInput;
+        _movementDirection = _movementDirection.normalized;
+        _playerData.SetMovementDirection(_movementDirection);
     }
 
     private void MovePlayer()
     {
-        _characterController.Move(_moveSpeed * Time.deltaTime * _moveDirection);
+        _characterController.Move(_moveSpeed * Time.deltaTime * _movementDirection);
     }
 }

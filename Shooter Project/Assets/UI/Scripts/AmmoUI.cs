@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AmmoUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI _text;
 
     private void OnEnable()
     {
@@ -17,6 +17,6 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateUI(int clipCount, int currentAmmo)
     {
-        text.text = $"{clipCount} / {currentAmmo}";
+        _text.text = $"{clipCount} / {currentAmmo}";
     }
 }
